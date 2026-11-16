@@ -874,7 +874,7 @@ body.lang-ko-mode .ed-h,body.lang-cn-mode .ed-h,body.lang-jp-mode .ed-h{line-hei
 
       <div class="cmp rv" id="cmp" data-mode="spec">
         <div class="cmp-bar">
-          <div class="seg" role="tablist" aria-label="<span data-i18n="cmp.eyebrow">Unit themes</span>">
+          <div class="seg" role="tablist" aria-label="Unit themes">
             <button type="button" class="active" id="tabSpec" aria-selected="true" onclick="setCmp('spec')"><span data-i18n="cmp.tab1">Spatial specs</span></button>
             <button type="button" id="tabInv" aria-selected="false" onclick="setCmp('invest')"><span data-i18n="cmp.tab2">Investment profile</span></button>
           </div>
@@ -1286,7 +1286,7 @@ function cacheEnglish(){
   for (var j=0;j<phs.length;j++){ EN_CACHE['ph:'+phs[j].getAttribute('data-i18n-ph')] = phs[j].getAttribute('placeholder')||''; }
 }
 function t(key){
-  var d = (currentLang === 'en') ? null : I18N[currentLang];
+  var d = I18N[currentLang];
   if (d && Object.prototype.hasOwnProperty.call(d, key)) return d[key];
   if (Object.prototype.hasOwnProperty.call(EN_CACHE, key)) return EN_CACHE[key];
   return key;
