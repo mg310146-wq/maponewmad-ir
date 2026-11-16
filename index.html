@@ -1579,8 +1579,11 @@ document.addEventListener('keydown', function(e){
   initHeader();
   initCarousel();
   initCounters();
-  setLang(SITE.defaultLang);
-  setCurrency('KRW');
+  /* Deep links: ?lang=ko|zh|ja and ?cur=USD keep the chosen view shareable. */
+  var q = {}, parts = (location.search || '').replace(/^\?/, '').split('&');
+  for (var i=0;i<parts.length;i++){ var kv = parts[i].split('='); if (kv[0]) q[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); }
+  setLang(q.lang && I18N[q.lang] ? q.lang : SITE.defaultLang);
+  setCurrency(q.cur === 'USD' ? 'USD' : 'KRW');
   runFin();
   window.addEventListener('load', function(){
     /* re-measure carousel after the embedded images settle */
