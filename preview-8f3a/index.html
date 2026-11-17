@@ -1484,6 +1484,19 @@ document.addEventListener('click', function(e){
   var w = document.getElementById('langSwitch');
   if (w && w.classList.contains('open') && !w.contains(e.target)) closeLangMenu();
 });
+/* ---------------- number formatting ----------------
+   German and French write decimals with a comma, as their prose above does. */
+function decSep(){
+  var s = '0.5';
+  return (currentLang === 'de' || currentLang === 'fr') ? ',' : '.';
+}
+function numLocale(v, dec){
+  var s = dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+  if (dec > 0 && decSep() === ',') s = s.replace('.', ',');
+  return s;
+}
+function pct(v, dec){ return numLocale(v, dec) + ' %'; }
+
 /* ---------------- currency ---------------- */
 function fmtPrice(){
   var p = SITE.price[currentCur];
@@ -1516,9 +1529,9 @@ function countUp(el, force){
     var p = Math.min((ts - start) / dur, 1);
     var e = 1 - Math.pow(1 - p, 3);
     var v = target * e;
-    el.textContent = dec > 0 ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US');
+    el.textContent = numLocale(v, dec);
     if (p < 1) requestAnimationFrame(step);
-    else el.textContent = dec > 0 ? target.toFixed(dec) : Math.round(target).toLocaleString('en-US');
+    else el.textContent = numLocale(target, dec);
   }
   requestAnimationFrame(step);
 }
@@ -1645,11 +1658,11 @@ function runFin(){
   var cap = parseFloat(g('rngExitCap').value);
   var growth = parseFloat(g('rngGrowth').value);
 
-  g('txtLtv').textContent = ltv + ' %';
-  g('txtRate').textContent = rate.toFixed(1) + ' %';
-  g('txtUplift').textContent = '+ ' + uplift + ' %';
-  g('txtExitCap').textContent = cap.toFixed(2) + ' %';
-  g('txtGrowth').textContent = growth.toFixed(1) + ' %';
+  g('txtLtv').textContent = pct(ltv, 0);
+  g('txtRate').textContent = pct(rate, 1);
+  g('txtUplift').textContent = '+ ' + pct(uplift, 0);
+  g('txtExitCap').textContent = pct(cap, 2);
+  g('txtGrowth').textContent = pct(growth, 1);
 
   var totalCost = PRICE_KRW * (1 + ACQ);
   var debt = PRICE_KRW * (ltv/100);
@@ -1671,16 +1684,16 @@ function runFin(){
   var coc = ((noiS - interest) / equity) * 100;
   var eqUsd = equity / (SITE.krwPerUsd * 1e6);
 
-  g('kpiIrr').textContent = r.toFixed(1) + ' %';
+  g('kpiIrr').textContent = pct(r, 1);
   g('kpiMult').textContent = t('fin.proforma');
   g('kpiFinDetail').textContent = t('fin.mult').replace('{mult}', mult.toFixed(2)).replace('{exit}', (exitV/1e9).toFixed(1));
-  g('kpiStab').textContent = yS.toFixed(2) + ' %';
-  g('kpiInplace').textContent = yIn.toFixed(2) + ' %';
+  g('kpiStab').textContent = pct(yS, 2);
+  g('kpiInplace').textContent = pct(yIn, 2);
   g('kpiNoi').textContent = 'KRW ' + bn(noiS) + ' B';
   g('kpiDebt').textContent = 'KRW ' + (debt/1e9).toFixed(1) + ' B';
   g('kpiInt').textContent = 'KRW ' + bn(interest) + ' B';
   g('kpiEquity').textContent = 'KRW ' + (equity/1e9).toFixed(1) + ' B ($' + eqUsd.toFixed(1) + 'M)';
-  g('kpiCoc').textContent = coc.toFixed(2) + ' %';
+  g('kpiCoc').textContent = pct(coc, 2);
 }
 
 /* ---------------- VDR ---------------- */
