@@ -672,6 +672,8 @@ html[dir="rtl"] .car-track{direction:ltr}
 html[dir="rtl"] .slide{direction:rtl}
 html[dir="rtl"] .slide-img::after{background:linear-gradient(270deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.12) 45%,transparent 70%)}
 html[dir="rtl"] .field select{padding-inline-end:0;padding-inline-start:22px;background-position:8px 18px,3px 18px}
+/* each language button keeps its own order: flag, then the Latin code */
+html[dir="rtl"] .lang-list button,html[dir="rtl"] .lang-current{direction:ltr}
 html[dir="rtl"] .hero-meta .v,html[dir="rtl"] .hero-meta div{align-items:flex-start}
 html[dir="rtl"] .lb-cap h3,html[dir="rtl"] .lb-cap p{text-align:start}
 html[dir="rtl"] input[type=range]{direction:rtl}
