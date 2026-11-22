@@ -348,6 +348,11 @@ h1,h2,h3{font-weight:200;letter-spacing:-.028em;line-height:1.02}
 .mk-facts .v{font-size:13px;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
 .mk-take{margin-top:clamp(30px,3.4vw,46px);padding-inline-start:16px;border-inline-start:1px solid var(--line-3);max-width:820px;font-size:clamp(13px,1.05vw,15px);line-height:1.85;color:var(--text);font-weight:300}
 .mk-grid,.mk-cell,.mk-facts,.mk-facts>*,.mk-take{min-width:0}
+@media(max-width:520px){
+  .mk-facts .k{font-size:8.5px;letter-spacing:.12em}
+  .mk-facts .v{font-size:12px;white-space:normal;text-align:end}
+  .mk-cap{max-width:none}
+}
 
 /* =========================================================================
    07 / CAROUSEL
